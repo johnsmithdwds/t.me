@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premium Content</title>
+
+<!-- Telegram -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<!-- Monetag -->
+<script src='//libtl.com/sdk.js' data-zone='10817467' data-sdk='show_10817467'></script>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Arial;
+background:#f5f6fb;
+}
+
+.header{
+text-align:center;
+padding:20px;
+}
+
+.header h1{
+margin:0;
+color:#8a5cff;
+}
+
+.container{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+padding:15px;
+}
+
+.card{
+background:#fff;
+border-radius:16px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.img-wrap{position:relative}
+
+.card img{
+width:100%;
+height:180px;
+object-fit:cover;
+}
+
+.lock{
+position:absolute;
+top:10px;
+left:10px;
+background:rgba(0,0,0,0.6);
+color:#fff;
+padding:5px 10px;
+border-radius:8px;
+font-size:12px;
+}
+
+.card-body{
+padding:10px;
+}
+
+.bar{
+height:6px;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+margin-top:5px;
+}
+
+.fill{
+height:100%;
+background:#8a5cff;
+width:0%;
+}
+
+.btn{
+margin-top:10px;
+width:100%;
+padding:10px;
+border:none;
+border-radius:12px;
+background:#8a5cff;
+color:#fff;
+font-weight:bold;
+}
+
+.unlocked{
+background:#00c853 !important;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<h1>Premium Content</h1>
+<p>Unlock exclusive videos</p>
+</div>
+
+<div class="container" id="cards"></div>
+
+<script>
+Telegram.WebApp.expand()
+
+/* Firebase config */
+const firebaseConfig = {
+  apiKey: "AIzaSyA9HcYcu3WfRTRnCdzo7EbzdDuJCkAobiM",
+  authDomain: "xxxxvideos-6be4f.firebaseapp.com",
+  databaseURL: "https://xxxxvideos-6be4f-default-rtdb.firebaseio.com",
+  projectId: "xxxxvideos-6be4f",
+  storageBucket: "xxxxvideos-6be4f.firebasestorage.app",
+  messagingSenderId: "156644110222",
+  appId: "1:156644110222:web:5fbe724ec206b6ac49bedf"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* Telegram user */
+const userId = Telegram.WebApp.initDataUnsafe?.user?.id || "guest"
+
+const TOTAL_ADS = 4
+
+const data = [
+{
+img:"https://i.imgur.com/SVe6GuM.gif",
+link:"https://omg10.com/4/9374528"
+},
+{
+img:"https://i.imgur.com/AbwtznM.gif",
+link:"https://omg10.com/4/10434249"
+},
+{
+img:"https://i.imgur.com/LHoSxvQ.gif",
+link:"https://omg10.com/4/9374535"
+},
+{
+img:"https://i.imgur.com/AjT6Bam.gif",
+link:"https://omg10.com/4/9374511"
+},
+{
+img:"https://i.imgur.com/QxzObKY.gif",
+link:"https://omg10.com/4/9374511"
+},
+{
+img:"https://i.imgur.com/29cnzaT.gif",
+link:"https://omg10.com/4/9374533"
+},
+{
+img:"https://i.imgur.com/0780Vln.gif",
+link:"https://omg10.com/4/10434248"
+},
+{
+img:"https://i.imgur.com/fMzFnvj.gif",
+link:"https://omg10.com/4/9374528"
+},
+{
+img:"https://i.imgur.com/YEdwIgt.gif",
+link:"https://omg10.com/4/10434249"
+},
+{
+img:"https://i.imgur.com/IvQuu6z.gif",
+link:"https://omg10.com/4/9374535"
+},
+{
+img:"https://i.imgur.com/hnhF7rh.gif",
+link:"https://omg10.com/4/9374511"
+},
+{
+img:"https://i.imgur.com/vLZ7RVO.gif",
+link:"https://omg10.com/4/9374533"
+},
+{
+img:"https://i.imgur.com/Gb2PdVY.jpeg",
+link:"https://omg10.com/4/10434248"
+},
+{
+img:"https://i.imgur.com/UwEGiFI.gif",
+link:"https://omg10.com/4/9374528"
+},
+{
+img:"https://i.imgur.com/eFvAeP9.gif",
+link:"https://omg10.com/4/10434249"
+},
+{
+img:"https://i.imgur.com/SSY944k.gif",
+link:"https://omg10.com/4/9374535"
+},
+{
+img:"https://i.imgur.com/OQgudvr.gif",
+link:"https://omg10.com/4/9374511"
+},
+{
+img:"https://i.imgur.com/6xO05uZ.gif",
+link:"https://omg10.com/4/9374533"
+},
+{
+img:"https://i.imgur.com/c84s7hM.jpeg",
+link:"https://omg10.com/4/10434248"
+},
+{
+img:"https://i.imgur.com/YlcVGjl.gif",
+link:"https://omg10.com/4/9374528"
+}
+]
+
+const container = document.getElementById("cards")
+
+data.forEach((item,i)=>{
+
+const card = document.createElement("div")
+card.className="card"
+
+card.innerHTML = `
+<div class="img-wrap">
+<img src="${item.img}">
+<div class="lock" id="lock${i}">LOCKED</div>
+</div>
+
+<div class="card-body">
+<b>Full video lock</b>
+
+<div>
+Progress <span id="count${i}">0</span>/${TOTAL_ADS}
+</div>
+
+<div class="bar">
+<div class="fill" id="fill${i}"></div>
+</div>
+
+<button class="btn" id="btn${i}">
+Watch 4 Ads to Unlock
+</button>
+</div>
+`
+
+container.appendChild(card)
+
+/* Load unlock from Firebase */
+db.ref("users/"+userId+"/unlock/"+i).once("value",snap=>{
+if(snap.exists()){
+unlockCard(i)
+}
+})
+
+/* local fallback */
+if(localStorage.getItem("unlock_"+i) === "true"){
+unlockCard(i)
+}
+
+document.getElementById("btn"+i).onclick = ()=> watchAd(i)
+
+})
+
+function watchAd(index){
+
+// Monetag ad
+if(typeof show_10817467 === "function"){
+    show_10817467()
+}
+
+let countEl = document.getElementById("count"+index)
+let fill = document.getElementById("fill"+index)
+
+let current = parseInt(countEl.innerText)
+current++
+
+countEl.innerText = current
+fill.style.width = (current/TOTAL_ADS*100)+"%"
+
+if(current >= TOTAL_ADS){
+unlockCard(index)
+
+localStorage.setItem("unlock_"+index,"true")
+db.ref("users/"+userId+"/unlock/"+index).set(true)
+}
+}
+
+function unlockCard(index){
+
+document.getElementById("lock"+index).innerText="UNLOCKED"
+
+let btn = document.getElementById("btn"+index)
+btn.innerText="Unlocked - Watch Now"
+btn.classList.add("unlocked")
+
+document.getElementById("fill"+index).style.width="100%"
+document.getElementById("count"+index).innerText=TOTAL_ADS
+
+btn.onclick = ()=> window.open(data[index].link)
+}
+
+</script>
+
+</body>
+</html>
