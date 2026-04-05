@@ -314,7 +314,7 @@ db.ref("users/"+userId+"/unlock/"+index).set(true)
 
 function unlockCard(index){
 
-document.getElementById("lock"+index).innerText="UNLOCKED"
+document.getElementById("lock"+index).style.display="none"
 
 let btn = document.getElementById("btn"+index)
 btn.innerText="Unlocked - Watch Now"
