@@ -246,7 +246,11 @@ card.className="card"
 card.innerHTML = `
 <div class="img-wrap">
 <img src="${item.img}">
-<div class="lock" id="lock${i}">LOCKED</div>
+<div class="lock" id="lock${i}">
+    <div class="lock-box">
+        <div class="lock-icon"></div>
+        <p>LOCKED</p>
+    </div>
 </div>
 
 <div class="card-body">
