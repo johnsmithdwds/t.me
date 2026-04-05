@@ -245,13 +245,15 @@ card.className="card"
 
 card.innerHTML = `
 <div class="img-wrap">
-<img src="${item.img}">
-<div class="lock" id="lock${i}">
-    <div class="lock-box">
-        <div class="lock-icon"></div>
-        <p>LOCKED</p>
+    <img src="${item.img}">
+    
+    <div class="lock" id="lock${i}">
+        <div class="lock-box">
+            <div class="lock-icon"></div>
+            <p>LOCKED</p>
+        </div>
     </div>
-</div>
+</div>  <!-- ✅ এটা add করো -->
 
 <div class="card-body">
 <b>Full video lock</b>
